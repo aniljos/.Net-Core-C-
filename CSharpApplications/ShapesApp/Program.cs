@@ -21,6 +21,7 @@ namespace ShapesApp
             Console.WriteLine("Select the Task");
             Console.WriteLine("1. Create a Shape");
             Console.WriteLine("2. Display all shapes");
+            Console.WriteLine("3. Draw all shapes");
             Console.WriteLine("Type e to Exit");
             string str_choice = Console.ReadLine();
             while (str_choice != "e")
@@ -67,6 +68,13 @@ namespace ShapesApp
                             shape.PrintPoints();
                         }
                     }
+                    else if(choice == 3)
+                    {
+                        foreach (var shape in shapes)
+                        {
+                            shape.Draw();
+                        }
+                    }
                     else
                     {
                         Console.WriteLine("Invalid entry");
@@ -80,6 +88,7 @@ namespace ShapesApp
                 Console.WriteLine("Select the Task");
                 Console.WriteLine("1. Create a Shape");
                 Console.WriteLine("2. Display all shapes");
+                Console.WriteLine("3. Draw all shapes");
                 Console.WriteLine("Type e to Exit");
                 str_choice = Console.ReadLine();
             }

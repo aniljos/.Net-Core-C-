@@ -32,7 +32,7 @@ namespace ShapesLib
             Console.WriteLine("Draw Circle");
         }
 
-        public void PrintPoints()
+        public override void PrintPoints()
         {
             Console.WriteLine("printing circle points");
             base.PrintPoints();
