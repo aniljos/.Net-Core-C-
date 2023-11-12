@@ -9,7 +9,11 @@ namespace ShapesApp
             Console.WriteLine("Hello, World!");
             //CreateShapes();
             //CreateShape();
-            App();
+
+            // Program program = new Program();
+            //program.App();
+
+            Program.App();
         }
 
 
