@@ -1,4 +1,6 @@
-﻿namespace ShapesLib
+﻿using System.Drawing;
+
+namespace ShapesLib
 {
 
     //new Shape(); This creates an instance, This will not work since its abstract
@@ -16,6 +18,8 @@
         public Shape() { }
         public Shape(int sx, int sy, int ex, int ey)
         {
+
+            
             StartX = sx;
             StartY = sy;
             EndX = ex;
@@ -27,6 +31,8 @@
 
         public abstract double CalculateArea();
         public abstract void Draw();
+
+        public abstract void Draw(Graphics graphics, Pen pen);
 
         public virtual void PrintPoints()
         {

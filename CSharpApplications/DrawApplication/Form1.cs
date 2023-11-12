@@ -52,9 +52,6 @@ namespace DrawApplication
                     graphics.DrawArc(Pens.Black, startX, startY, endX - startX, endY - startY, 0, 360);
                 }
             }
-            
-
-            
         }
 
         private void drawPanel_MouseMove(object sender, MouseEventArgs e)

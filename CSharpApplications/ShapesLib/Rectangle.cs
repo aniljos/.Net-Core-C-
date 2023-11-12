@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +30,15 @@ namespace ShapesLib
         public override void Draw()
         {
             Console.WriteLine("Draw a Recatangle");
+        }
+
+        public override void Draw(Graphics graphics, Pen pen)
+        {
+            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                graphics.DrawRectangle(pen, StartX, StartY, EndX - StartX, EndY - StartY);
+            }
+            
         }
 
         public override void PrintPoints()
