@@ -34,13 +34,14 @@ namespace ShapesLib
             Console.WriteLine("Draw Circle");
         }
 
-        public override void Draw(Graphics graphics, Pen pen)
+        public override void Draw(Graphics graphics, Pen pen, bool raiseEvent = false)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 if(EndX > StartX && EndY > StartY)
                 {
                     graphics.DrawArc(pen, StartX, StartY, EndX - StartX, EndY - StartY, 0, 360);
+                    base.Draw(graphics, pen, raiseEvent);
                 }
                
             }
@@ -52,6 +53,12 @@ namespace ShapesLib
             base.PrintPoints();
 
             //Console.WriteLine("Start Points of Rectangle: {0}, {1}, EndPoints: {2}, {3}", StartX, StartY, EndX, EndY);
+        }
+
+        public override Shape CreateShape()
+        {
+            return new Circle();
+
         }
     }
 }

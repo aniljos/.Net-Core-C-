@@ -3,6 +3,9 @@
 namespace ShapesLib
 {
 
+    public delegate void ShapeEventHandler(Shape shape);
+
+
     //new Shape(); This creates an instance, This will not work since its abstract
     // Shape shape: This crates a reference, this will work
     public abstract class Shape
@@ -13,6 +16,8 @@ namespace ShapesLib
 
         public int EndX { get; set; }
         public int EndY { get; set; }
+
+        public static event ShapeEventHandler ShapeDrawn;
 
 
         public Shape() { }
@@ -32,7 +37,17 @@ namespace ShapesLib
         public abstract double CalculateArea();
         public abstract void Draw();
 
-        public abstract void Draw(Graphics graphics, Pen pen);
+        public virtual void Draw(Graphics graphics, Pen pen, bool raiseEvent=false)
+        {
+            if (raiseEvent)
+            {
+                ShapeDrawn?.Invoke(this);
+            }
+            
+        }
+
+        public abstract Shape CreateShape();
+
 
         public virtual void PrintPoints()
         {

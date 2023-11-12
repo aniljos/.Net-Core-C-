@@ -32,11 +32,12 @@ namespace ShapesLib
             Console.WriteLine("Draw a Recatangle");
         }
 
-        public override void Draw(Graphics graphics, Pen pen)
+        public override void Draw(Graphics graphics, Pen pen,  bool raiseEvent = false)
         {
             if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 graphics.DrawRectangle(pen, StartX, StartY, EndX - StartX, EndY - StartY);
+                base.Draw(graphics, pen, raiseEvent);
             }
             
         }
@@ -44,6 +45,11 @@ namespace ShapesLib
         public override void PrintPoints()
         {
             Console.WriteLine("Start Points of Rectangle: {0}, {1}, EndPoints: {2}, {3}", StartX, StartY, EndX, EndY);
+        }
+
+        public override Shape CreateShape()
+        {
+            return new Rectangle();
         }
     }
    

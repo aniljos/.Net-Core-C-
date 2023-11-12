@@ -17,9 +17,20 @@ namespace DrawApplication
         private Shape shape = new ShapesLib.Rectangle();
         private ILogger logger = new ConsoleLogger();
 
+        private List<Shape> shapes = new List<Shape>();
+
+
         public DrawForm()
         {
             InitializeComponent();
+            rectButton.Click += (sender, e) => MessageBox.Show("You clicked on the rect button");
+            Shape.ShapeDrawn += shape_Drawn;
+        }
+
+        public void shape_Drawn(Shape shape)
+        {
+            string shape_name = shape.GetType().Name;
+            MessageBox.Show(string.Format("{0} drawn", shape_name));
         }
 
         private void rectButton_Click(object sender, EventArgs e)
@@ -61,9 +72,26 @@ namespace DrawApplication
         {
 
             Graphics graphics = drawPanel.CreateGraphics();
+            
             shape.EndX = e.X;
             shape.EndY = e.Y;
-            shape.Draw(graphics, Pens.Black);
+            shape.Draw(graphics, Pens.Black, true);
+
+            shapes.Add(shape);
+
+            //shape = shape.CreateShape();
+            shape = Activator.CreateInstance(shape.GetType()) as Shape;
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Graphics graphics = drawPanel.CreateGraphics();
+            foreach (Shape shape in shapes)
+            {
+                shape.Draw(graphics, Pens.Black);
+            }
+
+            base.OnPaint(e);
         }
     }
 }
