@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesApp", "ShapesApp\Shap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawApplication", "DrawApplication\DrawApplication.csproj", "{7BD7B027-4F23-4F11-BF8F-CE945F8CE62C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageFeatures", "LanguageFeatures\LanguageFeatures.csproj", "{3F799DDD-4BBB-450E-8559-6A3A2704657C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageFeatures", "LanguageFeatures\LanguageFeatures.csproj", "{3F799DDD-4BBB-450E-8559-6A3A2704657C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileIO", "FileIO\FileIO.csproj", "{3A1842C5-1752-4CF3-A246-66A300984FCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{3F799DDD-4BBB-450E-8559-6A3A2704657C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F799DDD-4BBB-450E-8559-6A3A2704657C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F799DDD-4BBB-450E-8559-6A3A2704657C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A1842C5-1752-4CF3-A246-66A300984FCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A1842C5-1752-4CF3-A246-66A300984FCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A1842C5-1752-4CF3-A246-66A300984FCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A1842C5-1752-4CF3-A246-66A300984FCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -14,7 +14,7 @@ namespace DrawApplication
     public partial class DrawForm : Form
     {
 
-        private Shape shape = new ShapesLib.Rectangle();
+        private Shape shape;// = new ShapesLib.Rectangle();
         private ILogger logger = new ConsoleLogger();
 
         private List<Shape> shapes = new List<Shape>();
@@ -23,64 +23,87 @@ namespace DrawApplication
         public DrawForm()
         {
             InitializeComponent();
-            rectButton.Click += (sender, e) => MessageBox.Show("You clicked on the rect button");
+           // rectButton.Click += (sender, e) => MessageBox.Show("You clicked on the rect button");
             Shape.ShapeDrawn += shape_Drawn;
         }
 
         public void shape_Drawn(Shape shape)
         {
             string shape_name = shape.GetType().Name;
-            MessageBox.Show(string.Format("{0} drawn", shape_name));
+            //MessageBox.Show(string.Format("{0} drawn", shape_name));
         }
 
         private void rectButton_Click(object sender, EventArgs e)
         {
             shape = new ShapesLib.Rectangle();
-            logger.Info("rectangle created");
+            //logger.Info("rectangle created");
         }
 
         private void circleButton_Click(object sender, EventArgs e)
         {
             shape = new Circle();
-            logger.Info("circle created");
+            //logger.Info("circle created");
         }
 
         private void drawPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            shape.StartX = e.X;
-            shape.StartY = e.Y;
+            if(shape != null)
+            {
+                shape.StartX = e.X;
+                shape.StartY = e.Y;
+            }
+            else
+            {
+               // MessageBox.Show("Please select as shape");
+            }
+            
         }
 
         private void drawPanel_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
+                try
+                {
+                    Graphics graphics = drawPanel.CreateGraphics();
+                    shape.Draw(graphics, Pens.White);
 
-                Graphics graphics = drawPanel.CreateGraphics();
-                shape.Draw(graphics, Pens.White);
-
-                shape.EndX = e.X;
-                shape.EndY = e.Y;
+                    shape.EndX = e.X;
+                    shape.EndY = e.Y;
 
 
-                shape.Draw(graphics, Pens.Black);
+                    shape.Draw(graphics, Pens.Black);
+                }
+                catch(NullReferenceException ex)
+                {
+                    MessageBox.Show("Please select as shape" + ex.Message);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Technical Error");
+                }
+               
 
             }
         }
 
         private void drawPanel_MouseUp(object sender, MouseEventArgs e)
         {
+            if (shape != null)
+            {
 
-            Graphics graphics = drawPanel.CreateGraphics();
-            
-            shape.EndX = e.X;
-            shape.EndY = e.Y;
-            shape.Draw(graphics, Pens.Black, true);
 
-            shapes.Add(shape);
+                Graphics graphics = drawPanel.CreateGraphics();
 
-            //shape = shape.CreateShape();
-            shape = Activator.CreateInstance(shape.GetType()) as Shape;
+                shape.EndX = e.X;
+                shape.EndY = e.Y;
+                shape.Draw(graphics, Pens.Black, true);
+
+                shapes.Add(shape);
+
+                //shape = shape.CreateShape();
+                shape = Activator.CreateInstance(shape.GetType()) as Shape;
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
