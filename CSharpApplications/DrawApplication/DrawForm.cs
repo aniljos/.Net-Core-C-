@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace DrawApplication
 {
@@ -23,7 +24,7 @@ namespace DrawApplication
         public DrawForm()
         {
             InitializeComponent();
-           // rectButton.Click += (sender, e) => MessageBox.Show("You clicked on the rect button");
+            // rectButton.Click += (sender, e) => MessageBox.Show("You clicked on the rect button");
             Shape.ShapeDrawn += shape_Drawn;
         }
 
@@ -47,16 +48,16 @@ namespace DrawApplication
 
         private void drawPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            if(shape != null)
+            if (shape != null)
             {
                 shape.StartX = e.X;
                 shape.StartY = e.Y;
             }
             else
             {
-               // MessageBox.Show("Please select as shape");
+                // MessageBox.Show("Please select as shape");
             }
-            
+
         }
 
         private void drawPanel_MouseMove(object sender, MouseEventArgs e)
@@ -74,15 +75,15 @@ namespace DrawApplication
 
                     shape.Draw(graphics, Pens.Black);
                 }
-                catch(NullReferenceException ex)
+                catch (NullReferenceException ex)
                 {
                     MessageBox.Show("Please select as shape" + ex.Message);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Technical Error");
                 }
-               
+
 
             }
         }
@@ -115,6 +116,44 @@ namespace DrawApplication
             }
 
             base.OnPaint(e);
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dialogResult = saveFileDialog1.ShowDialog();
+            if(dialogResult == DialogResult.OK)
+            {
+
+                string filePath = saveFileDialog1.FileName;
+                using (StreamWriter stream = new StreamWriter(filePath))
+                {
+                    XmlSerializer serializer = new XmlSerializer(shapes.GetType());
+                    serializer.Serialize(stream, shapes);
+                }
+                   
+
+
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dialogResult = openFileDialog1.ShowDialog();
+            if(dialogResult == DialogResult.OK)
+            {
+                string filePath = openFileDialog1.FileName;
+                using(StreamReader reader = new StreamReader(filePath))
+                {
+                    XmlSerializer serializer = new XmlSerializer(shapes.GetType());
+                    shapes = serializer.Deserialize(reader) as List<Shape>;
+                    Graphics graphics = drawPanel.CreateGraphics();
+                    foreach (var shape in shapes)
+                    {
+                        shape.Draw(graphics, Pens.Black);
+                    }
+                }
+                
+            }
         }
     }
 }

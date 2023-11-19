@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using Newtonsoft.Json;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace FileIO
 {
@@ -24,7 +26,9 @@ namespace FileIO
             //WriteToFile();
             // DisposeDemo();
             //WriteToFileWithUsing();
-            ReadFromFile();
+            //ReadFromFile();
+            //GenerateProductXML();
+            GenerateProductJSON();
         }
 
 
@@ -140,6 +144,46 @@ namespace FileIO
             {
 
                 Console.WriteLine($"Exception {ex.Message}");
+            }
+        }
+    
+    
+        static void GenerateProductXML()
+        {
+            try
+            {
+                Product product = new Product() { Id = 10, Name = "IPhone", Price = 1200 };
+                XmlSerializer serializer = new XmlSerializer(typeof(Product));
+                //StringWriter writer = new StringWriter();
+                StreamWriter writer = new StreamWriter("products.xml");
+                serializer.Serialize(writer, product);
+                //Console.WriteLine(writer.ToString());
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        static void GenerateProductJSON()
+        {
+            try
+            {
+                Product product = new Product() { Id = 10, Name = "IPhone", Price = 1200 };
+                var json = JsonConvert.SerializeObject(product);
+                Console.WriteLine(json);
+                using (StreamWriter writer = new StreamWriter("Product.json"))
+                {
+                    writer.WriteLine(json);
+                    writer.Flush();
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
             }
         }
     }

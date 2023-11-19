@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Xml.Serialization;
 
 namespace ShapesLib
 {
@@ -8,6 +9,10 @@ namespace ShapesLib
 
     //new Shape(); This creates an instance, This will not work since its abstract
     // Shape shape: This crates a reference, this will work
+
+    [XmlInclude(typeof(Shape))]
+    [XmlInclude(typeof(Rectangle))]
+    [XmlInclude(typeof(Circle))]
     public abstract class Shape
     {
         // Start Point & End Point
