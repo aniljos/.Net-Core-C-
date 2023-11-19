@@ -4,6 +4,7 @@ namespace DataAccess
 {
     internal class Program
     {
+        static string connectionString = "Server=localhost; Database=Training; User Id=sa; Password=sa";
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
@@ -12,7 +13,40 @@ namespace DataAccess
             //InsertProduct(3, "Logitech USB Mouse", 50, "Mouse");
             //InsertProduct(4, "Micosoft Surface", 11000, "Busniess Tablet");
 
-            UpdateProductPrice(1, 12000);
+            //UpdateProductPrice(1, 12000);
+            FetchProducts();
+        }
+
+        static void FetchProducts()
+        {
+            try
+            {
+                using(SqlConnection conn = new SqlConnection(connectionString))
+                {
+
+                    conn.Open();
+                    string cmdTxt = "Select * from Product";
+                    using(SqlCommand command = new SqlCommand(cmdTxt, conn))
+                    {
+                        SqlDataReader reader =  command.ExecuteReader();
+
+                        while (reader.Read()){
+
+                            var id = reader.GetInt32(0);
+                            var name = reader.GetString(1);
+                            var price = reader.GetDouble(2);
+                            var desc = reader.GetString(3);
+
+                            Console.WriteLine($"Id: {id}, Name: {name}, Price: {price}, Description: {desc}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
         }
 
         static void UpdateProductPrice(int id, double price)
@@ -20,7 +54,7 @@ namespace DataAccess
 
             try
             {
-                string connectionString = "Server=localhost; Database=Training; User Id=sa; Password=sa";
+                //string connectionString = "Server=localhost; Database=Training; User Id=sa; Password=sa";
                 using(SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
@@ -61,7 +95,7 @@ namespace DataAccess
 
 
                 //Connect to the DB
-                string connectionString = "Server=localhost; Database=Training; User Id=sa; Password=sa"; // SQL Authentication
+                //string connectionString = "Server=localhost; Database=Training; User Id=sa; Password=sa"; // SQL Authentication
                                                                                                           //string connectionString = "Server=localhost; Database=Training; Intergrated Security=true"; // Windows Authentication
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
